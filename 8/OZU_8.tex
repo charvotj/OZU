@@ -78,6 +78,60 @@
 \section{1. - 4.}
 
 
+\begin{figure*}[h!]
+	\begin{tikzpicture}
+		\centering
+		\begin{axis}
+			[
+			xlabel={\( P_{in}\ [\unit{\watt}]\)},
+			ylabel={\( \theta\ [\unit{\degreeCelsius}]\)},
+			axis y line*=left, % dve y osy
+			width=1\textwidth,
+			height = 0.5\textwidth,
+			legend pos=north west,
+			xmin=70,
+			% ymin=,
+			xmax=180,
+			ymax=380
+			]
+
+			\addplot[mark=x, thick, blue, only marks, mark size=3pt] table [skip first n=2, x=P1, y=t, col sep=comma] {data/prvni-cast.csv};
+			
+			\addlegendentry{Teplota výměníku tepla}
+			
+		\end{axis}   
+	 
+		
+		% Second y axis 
+		\begin{axis}
+			[
+			ylabel={\(\eta\ [\unit{\percent}]\)},
+			axis x line=none,
+			axis y line*=right,
+			width=1\textwidth,
+			height = 0.5\textwidth,
+			legend pos=north east,
+			xmin=70,
+			ymin=2.5e-4,
+			xmax=180,
+			ymax=7e-4
+			]
+
+			\addplot[mark= +, thick, red, only marks, mark size=3pt] table [skip first n=2, x=P1, y=etha, col sep=comma] {data/prvni-cast.csv};
+			\addplot[samples=2,domain = 75:175,red,dashed, thin]{0.000489979-x*3.225855279410e-7};
+			
+			\addlegendentry{Účinnost motoru}
+		
+	\end{axis}
+	    
+	\end{tikzpicture}
+	\caption{Závislost teploty výměníku tepla a účinnosti motoru na příkonu ohřívače.}
+\end{figure*}
+
+
+
+
+
 
 		
 	% \clearpage
