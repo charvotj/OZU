@@ -1,0 +1,7 @@
+popis,deltaT,U,I,P,Seebec
+text,K,V,A,mW,?
+popis,deltaT,U,I,P,alpha
+Kohoutek - studená + teplá,13.5,0.14,0.0185,2.5900,0.01037
+Kohoutek (stud) + konvice (horká),59.5,0.3,0.1820,56.420,0.00521
+Voda s ledem + konvice (horká),81.3,0.33,0.2700,89.100,0.00406
+Isopropyl + konvice (horká),108.3,0.370,0.3200,118.40,0.00342000000
