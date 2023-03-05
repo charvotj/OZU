@@ -129,6 +129,41 @@
 \end{figure*}
 
 
+\begin{figure*}[h!]
+	\begin{tikzpicture}
+		\centering
+		\begin{axis}
+			[
+			xlabel={\( t\ [\unit{\second}]\)},
+			ylabel={\( \theta\ [\unit{\degreeCelsius}]\)},
+			%axis y line*=left, % dve y osy
+			width=1\textwidth,
+			height = 0.5\textwidth,
+			legend pos=north east,
+%			xmin=0,
+%			ymin=0,
+%			xmax=100
+%			ymax=100
+			]
+
+			\addplot[mark=x, mark options={solid}, thick, blue, solid, mark size=3pt] table [skip first n=2, x=cas, y=tep1, col sep=comma] {data/druha-cast.csv};
+			\addlegendentry{Čerpadlo vypnuto}
+			
+			\addplot[mark=+, mark options={solid}, thick, red, dashed, mark size=3pt] table [skip first n=2, x=cas, y=tep2, col sep=comma] {data/druha-cast.csv};
+			\addlegendentry{Čerpadlo zapnuto}
+
+			% \addplot[mark=triangle, thick, green, only marks, mark size=3pt] table [skip first n=2, x=cas, y=tep3, col sep=comma] {data/druha-cast.csv};
+			\addplot[mark=triangle, mark options={solid}, thick, green, dotted, mark size=3pt] table [skip first n=2, x=cas, y=tep3, col sep=comma] {data/druha-cast.csv};
+			\addlegendentry{Čerpadlo zapnuto v opačném směru, od \SI{100}{\degreeCelsius}}
+		\end{axis}   
+	 
+		    
+	\end{tikzpicture}
+	\caption{Časová závislost ochlazování výměníku pro různé módy tepelného čerpadla.}
+\end{figure*}
+
+
+
 
 
 
