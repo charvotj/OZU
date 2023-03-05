@@ -1,0 +1,11 @@
+Čas,Bez motoru,Motor 6V polarita podle barviček,"Bez motoru po 100, pak motor 6V polarita opačná"
+s,˚C,˚C,˚C
+cas,tep1,tep2,tep3
+0,300,300,300
+340,,,100
+440,,80,80
+503,80,,
+918,,,40
+1043,,40,
+1120,40,,
+
