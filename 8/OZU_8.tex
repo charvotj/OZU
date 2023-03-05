@@ -57,7 +57,8 @@
 \usepackage{subfiles} % Best loaded last in the preamble
 \usepackage{datatool}
 
-
+\DTLloaddb[omitlines=2]{prvni}{data/prvni-cast.csv}
+\DTLloaddb[omitlines=2]{druha}{data/druha-cast.csv}
 
 
 
@@ -75,8 +76,42 @@
 %		
 %	\clearpage
 
-\section{1. - 4.}
+\section{Zpracování měřených hodnot}
 
+\begin{table}[h!]
+	\centering
+	\def\arraystretch{1.4}
+	\begin{tabular}{ |l|l|l|l|l|l|l|l| }
+		\hline
+		$ I_{in} \ [\unit{\ampere}] $ & 
+		$ U_{in} \ [\unit{\volt}] $ & 
+		$ P_{in} \ [\unit{\watt}] $ &
+		$ \theta\ [\unit{\degreeCelsius}] $ &  
+		$ I_{out} \ [\unit{\milli\ampere}] $ &
+		$ U_{out} \ [\unit{\volt}] $ &
+		$ P_{out} \ [\unit{\milli\watt}] $ &
+		$ \eta\ [\unit{\percent}] $
+		\DTLforeach{prvni}{\A=I1,\B=U1,\C=P1,\D=t,\E=I2,\F=U2, \G=P2, \H=etha}
+		{\DTLiffirstrow{\\ \hline \hline}{\\ \hline} %
+			\num[round-mode=places,round-precision=2]{\A} &
+			\num[round-mode=places,round-precision=2]{\B} &
+			\num[round-mode=places,round-precision=2]{\C} &
+			\num[round-mode=places,round-precision=2]{\D} &
+			\num[round-mode=places,round-precision=2]{\fpeval{\E * 1000}} &
+			\num[round-mode=places,round-precision=2]{\F} &
+			\num[round-mode=places,round-precision=2]{\fpeval{\G *1000}} &
+			\num[scientific-notation = true,round-mode=places,round-precision=2]{\H}} \\ \hline
+	\end{tabular}
+	\caption{\label{tab:tabulka-vykon} Tabulka naměřených a vypočtených hodnot.}
+\end{table}
+
+
+\[
+	P=U\cdot I 
+\]
+\[
+	\eta = P_{out}/P_{in}  
+\]
 
 \begin{figure*}[h!]
 	\begin{tikzpicture}
@@ -129,6 +164,30 @@
 \end{figure*}
 
 
+\begin{table}[h!]
+	\centering
+	\def\arraystretch{1.4}
+	\begin{tabular}{ |c|c|c|c| }
+		\hline
+		Čas & 
+		Měření 1 & 
+		Měření 2 &
+		Měření 3 \\ \hline
+		$ t\ [\unit{\second}] $ & 
+		$ \theta_{1}\ [\unit{\degreeCelsius}] $ & 
+		$ \theta_{2}\ [\unit{\degreeCelsius}] $ & 
+		$ \theta_{3}\ [\unit{\degreeCelsius}] $ 
+		\DTLforeach{druha}{\A=cas,\B=tep1,\C=tep2,\D=tep3}
+		{\DTLiffirstrow{\\ \hline \hline}{\\ \hline} %
+			\A &
+			\B &
+			\C &
+			\D } \\ \hline
+	\end{tabular}
+	\caption{\label{tab:tabulka-vykon} Tabulka naměřených časů pro různé teploty chladnutí.}
+\end{table}
+
+
 \begin{figure*}[h!]
 	\begin{tikzpicture}
 		\centering
@@ -169,10 +228,18 @@
 
 
 		
-	% \clearpage
+	\clearpage
 \section{Závěr}
-	Měřili jsme peltierův článek zapojený jak ve funkci zdroje napětí, tak ve funkci chladiče / ohřívače. Pokud k plošky článku přiložíme k materiálům s různou teplotou, na výstupu článku vznikne elektrické napětí úměrné rozdílu teplot. Z počtu bodů, které jsme měřili, nelze přesný charakter závislosti spolehlivě určit, dle dostupné teorie by měl ale odpovídat přímce. Také jsme se pokusili stanovit Seebeckův koeficient našeho článku, který nám vyšel v rozmezí 0,003 až 0,01 \unit{\volt\per\kelvin}.
-	
-	Při druhém zapojení jsme nechali článkem protékat proud a měřili jsme změnu teploty vody v nádobkách. Vzniklý teplotní rozdíl je závislý na připojením napětí, větší napští odpovídá většímu chladícímu i ohřevnému výkonu, článek tak zvládá déle "vzdorovat" tepelné výměně s okolním prostředím.
-
+	Podle struktury motoru jsme vyhodnotili, že se jedná nejspíše o modifikaci \(\gamma\).  	
+	\\
+	\\
+	Nejprve jsme zkoumali motor v režimu generátoru - po dodání tepla se stirlingův motor začne otáčet a vytváří tak mechanickou práci, která je následně předána DC elektromotorku sloužícímu jako generátor. Protože se jedná o poměrně malý a nedokonalý model motoru, zaznamenali jsme vysoké výkyvy ve výkonu motoru, v některých momentech se dokonce zastavil. Snažili jsme se zaznamenat přibližnou průměrnou hodnotu, ale jak je vidět v Grafu 1, rozptyl měřených hodnot je dost vysoký. Z proložené přímky to vypadá, že účinost s rostoucím příkonem klesá, zřejmě kvůli větším tepelným ztrátám do okolí ohřívače.
+	\\ \\
+	Dále jsme stirlingův motor zapojili jako tepelné čerpadlo - tedy jsme elektromotor připojili ke zdroji napětí, dodával tedy do soustavy potřebnou mechanickou práci a stirlingův motor pohybem pístů přenášel teplo mezi ohřívačem a chladičem. 
+	\\ \\ 
+	Nejprve jsme měřili čas zchladnutí ohřívače bez pomoci čerpadla, následně se zapnutým čerpadlem. Z výchozí teploty \SI{300}{\degreeCelsius} na teplotu \SI{80}{\degreeCelsius} se při zapnutém čerpadle ohřívač ochladil o minutu rychleji. Z této teploty na výslednou teplotu \SI{40}{\degreeCelsius} pak bylo zapojení s čerpadlem o \SI{17}{\second} rychlejší. Tepelné čerpadlo tedy urychlilo přenos tepla z ohřívače do chladiče.
+	\\ \\
+	Při posledním měření se ohřívač nejprve chladil bez použití čerpadla do teploty \SI{100}{\degreeCelsius}, pak jsme zapli čerpadlo s opačnou polaritou elektromotorku (mělo by tedy chlazení zpomalit), na teplotu \SI{80}{\degreeCelsius} jsme se ale dostali stejně rychle jako v předchozím (urychleném) scénáři. Na finální teplotu jsme se dostali o celé dvě minuty dříve než v předchozím měření. 
+	\\ \\
+	Měření je tedy buďto krajně nespolehlivé a nebo byl špatný některý z našich předpokladů o fungování tepelného čerpadla.
 \end{document}
