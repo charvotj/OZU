@@ -57,8 +57,8 @@
 \usepackage{subfiles} % Best loaded last in the preamble
 \usepackage{datatool}
 
-\DTLloaddb[omitlines=2]{prvni}{data/prvni-cast.csv}
-\DTLloaddb[omitlines=2]{druha}{data/druha-cast.csv}
+% \DTLloaddb[omitlines=2]{prvni}{data/prvni-cast.csv}
+% \DTLloaddb[omitlines=2]{druha}{data/druha-cast.csv}
 
 
 
@@ -74,9 +74,153 @@
 %	\section{Výsledky počítačové simulace}
 %		\input{tex/numerika}
 %		
+
 %	\clearpage
 
 \section{Zpracování měřených hodnot}
+
+\begin{figure*}[h!]
+	\begin{tikzpicture}
+		\centering
+		\begin{axis}
+			[
+			xlabel={\( U\ [\unit{\volt}]\)},
+			ylabel={\( I\ [\unit{\ampere}]\)},
+			%axis y line*=left, % dve y osy
+			width=1\textwidth,
+			height = 0.5\textwidth,
+			legend pos=south west,
+%			xmin=0,
+%			ymin=0,
+%			xmax=100
+%			ymax=100
+			]
+
+			\addplot[mark=x, mark options={solid}, thick, blue, only marks, mark size=3pt] table [skip first n=1, x=Unast, y=I, col sep=comma] {data/VA-bila.csv};
+			\addlegendentry{Nastavené napětí}
+			\addplot[mark=+, mark options={solid}, thick, red, only marks, mark size=3pt] table [skip first n=1, x=U, y=Inast, col sep=comma] {data/VA-bila.csv};
+			\addlegendentry{Nastavený proud}
+			
+			% \addlegendentry{}
+			
+		\end{axis}   
+	 
+		 
+	\end{tikzpicture}
+	\caption{VA charakteristika při bílém světle.}
+\end{figure*}
+
+
+\begin{figure*}[h!]
+	\begin{tikzpicture}
+		\centering
+		\begin{axis}
+			[
+			xlabel={\( U\ [\unit{\volt}]\)},
+			ylabel={\( I\ [\unit{\ampere}]\)},
+			%axis y line*=left, % dve y osy
+			width=1\textwidth,
+			height = 0.5\textwidth,
+			legend pos=south west,
+%			xmin=0,
+%			ymin=0,
+%			xmax=100
+%			ymax=100
+			]
+
+			\addplot[mark=x, mark options={solid}, thick, blue, only marks, mark size=3pt] table [skip first n=1, x=Unast, y=I, col sep=comma] {data/VA-cervena.csv};
+			\addlegendentry{Nastavené napětí}
+			\addplot[mark=+, mark options={solid}, thick, red, only marks, mark size=3pt] table [skip first n=1, x=U, y=Inast, col sep=comma] {data/VA-cervena.csv};
+			\addlegendentry{Nastavený proud}
+			
+			% \addlegendentry{}
+			
+		\end{axis}   
+	 
+		 
+	\end{tikzpicture}
+	\caption{VA charakteristika při červeném světle.}
+\end{figure*}
+
+
+\begin{figure*}[h!]
+	\begin{tikzpicture}
+		\centering
+		\begin{axis}
+			[
+			xlabel={\( U\ [\unit{\volt}]\)},
+			ylabel={\( I\ [\unit{\ampere}]\)},
+			%axis y line*=left, % dve y osy
+			width=1\textwidth,
+			height = 0.5\textwidth,
+			legend pos=south west,
+%			xmin=0,
+%			ymin=0,
+%			xmax=100
+%			ymax=100
+			]
+
+			\addplot[mark=x, mark options={solid}, thick, blue, only marks, mark size=3pt] table [skip first n=1, x=Unast, y=I, col sep=comma] {data/VA-zelena.csv};
+			\addlegendentry{Nastavené napětí}
+			\addplot[mark=+, mark options={solid}, thick, red, only marks, mark size=3pt] table [skip first n=1, x=U, y=Inast, col sep=comma] {data/VA-zelena.csv};
+			\addlegendentry{Nastavený proud}
+			
+			% \addlegendentry{}
+			
+		\end{axis}   
+	 
+		 
+	\end{tikzpicture}
+	\caption{VA charakteristika při zeleném světle.}
+\end{figure*}
+
+
+\begin{figure*}[h!]
+	\begin{tikzpicture}
+		\centering
+		\begin{axis}
+			[
+			xlabel={\( U\ [\unit{\volt}]\)},
+			ylabel={\( I\ [\unit{\ampere}]\)},
+			%axis y line*=left, % dve y osy
+			width=1\textwidth,
+			height = 0.5\textwidth,
+			legend pos=south west,
+%			xmin=0,
+%			ymin=0,
+%			xmax=100
+%			ymax=100
+			]
+
+			\addplot[mark=x, mark options={solid}, thick, blue, only marks, mark size=3pt] table [skip first n=1, x=Unast, y=I, col sep=comma] {data/VA-modra.csv};
+			\addlegendentry{Nastavené napětí}
+			\addplot[mark=+, mark options={solid}, thick, red, only marks, mark size=3pt] table [skip first n=1, x=U, y=Inast, col sep=comma] {data/VA-modra.csv};
+			\addlegendentry{Nastavený proud}
+			
+			% \addlegendentry{}
+			
+		\end{axis}   
+	 
+		 
+	\end{tikzpicture}
+	\caption{VA charakteristika při modrém světle.}
+\end{figure*}
+
+
+\begin{table}[]
+	\centering
+	\def\arraystretch{1.4}
+	\begin{tabular}{|c|c|c|c|}
+			\hline
+			Veličina & \(U_{OC}\ [\unit{\volt}] \)  &  \(I_{SC}\ [\unit{\milli\ampere}]\) &  \(P_{max}\ [\unit{\milli\watt}]\)  \\ \hline \hline
+			Bílá & 1,98 &  12,6 &  14,11 \\\hline
+			Červená & 1,86 &  5,4 &  6,22 \\\hline
+			Zelená & 1,86 &  4,8 &  5,15 \\\hline
+			Modrá & 1,9 &  9,2 &  11,04 \\\hline
+	\end{tabular}
+	\caption{Naměřené hodnoty \(U_{OC} \) a \(I_{SC} \).}
+	\label{tab:tabulka-hodnot}
+\end{table}
 
 	\clearpage
 \section{Závěr}
