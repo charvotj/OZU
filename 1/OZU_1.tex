@@ -207,23 +207,37 @@
 \end{figure*}
 
 
+\clearpage
 \begin{table}[]
 	\centering
 	\def\arraystretch{1.4}
-	\begin{tabular}{|c|c|c|c|}
+	\begin{tabular}{|c|c|c|c|c|c|}
 			\hline
-			Veličina & \(U_{OC}\ [\unit{\volt}] \)  &  \(I_{SC}\ [\unit{\milli\ampere}]\) &  \(P_{max}\ [\unit{\milli\watt}]\)  \\ \hline \hline
-			Bílá & 1,98 &  12,6 &  14,11 \\\hline
-			Červená & 1,86 &  5,4 &  6,22 \\\hline
-			Zelená & 1,86 &  4,8 &  5,15 \\\hline
-			Modrá & 1,9 &  9,2 &  11,04 \\\hline
+			Veličina & \(U_{OC}\ [\unit{\volt}] \)  &  \(I_{SC}\ [\unit{\milli\ampere}]\) &  \(P_{max}\ [\unit{\milli\watt}]\)  &  \(U_{maxW}\ [\unit{\volt}]\)  &  \(I_{maxW}\ [\unit{\milli\ampere}]\)  \\ \hline \hline
+			Bílá & 1,98 &  12,6 &  14,11 &  1,4 &  10,08 \\\hline
+			Červená & 1,86 &  5,4 &  6,22 &  1,44 &  4,32 \\\hline
+			Zelená & 1,86 &  4,8 &  5,15 &  1,34 &  3,84 \\\hline
+			Modrá & 1,9 &  9,2 &  11,04 &  1,5 &  7,36 \\\hline
 	\end{tabular}
-	\caption{Naměřené hodnoty \(U_{OC} \) a \(I_{SC} \).}
+	\caption{Přehled důležitých hodnot pro různé zdroje světla.}
 	\label{tab:tabulka-hodnot}
 \end{table}
 
-	\clearpage
+\[
+	P_{max} =I_{maxW} \cdot U_{maxW} 
+\]
+\[
+	P_{max} =10,08 \cdot 1,4 = \SI{14,11}{\milli\watt}
+\]
+
 \section{Závěr}
+	Na přiloženém solárním článku jsme měřili VA charakteristiky při osvětlení světlem různých vlnových délek. Změřili jsme vždy napětí na prázdno a proudy na krátko (viz Tab. 1) a následně za pomoci odporové dekády nastavovali hodnoty z nich odvozené dle zadání.
+	Všechny grafy se skládají ze dvou částí -- v první části jsme nastavovali vypočtené hodnoty napětí a měřili odpovídající proud, ve druhé části bylo přesnější nastavit proud a následně odečíst napětí. Protože se obě části částečně překrývají, jsou v grafu odlišeny.
+	\\\\
+	Schod v prvním grafu je nejspíš způsoben nevhodně zvoleným pořadím měřených hodnot případně nedestatečnou prodlevou mezi měřeními. Pro další měření jsme techniku zlepšili.
+	\\\\ 
+	Dále jsme hledali maximální výkon, který panel dodal pro různá světla. Ve VA charakteristice se jedná o bod, pod který lze vepsat obdélník s největším obsahem, tedy obvykle bod, nacházející se v oblasti zlomu křivky. V Tab. 1 jsou přehledně sepsány zjištěné macimální výkony i body v grafu, kterým odpovídají.
+
 
 
 \end{document}
