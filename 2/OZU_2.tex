@@ -57,15 +57,15 @@
 \usepackage{subfiles} % Best loaded last in the preamble
 \usepackage{datatool}
 
-% \DTLloaddb[omitlines=2]{prvni}{data/prvni-cast.csv}
+\DTLloaddb[omitlines=1]{data}{data/data.csv}
 % \DTLloaddb[omitlines=2]{druha}{data/druha-cast.csv}
 
 
 
 \begin{document}
-	%====== Vygenerování tabulky ======
+%====== Vygenerování tabulky ======
 %	\maketitle
-	%====== Úvodní texty protokolu ======
+%====== Úvodní texty protokolu ======
 
 %	\section{Teoretický úvod}
 %		\input{tex/1-uvod}
@@ -78,35 +78,140 @@
 %	\clearpage
 
 \section{Zpracování měřených hodnot}
+	\begin{table}[h!]
+		\centering
+		\def\arraystretch{1.4}
+		\begin{tabular}{ |l|l|l|l|l|l| }
+			\hline
+			Převod &
+			Zátěž [\unit{\ohm}] &
+			\(Q\ [\unit{\litre\per\hour}]\) &
+			\(p\ [\unit{\kilo\pascal}]\) &
+			\(U\ [\unit{\volt}]\) &
+			\(f\ [\unit{\hertz}]\)
+			%
+			\DTLforeach{data}{\A=prevod,\B=R,\C=Q,\D=p,\E=U,\F=f, \G=I,\H=Pt,\I=Pg,\J=Qt,\K=etha,\L=H}
+			{\DTLiffirstrow{\\ \hline \hline}{\\ \hline} %
+			\A & 
+			\B &
+			\C &
+			\D &
+			\E &
+			\F 
+			}\\ \hline
+		\end{tabular}
+		\caption{Naměřené hodnoty.}
+		\label{tab:tabulka-hodnot}
+	\end{table}
+	
+	\subsection{Příklady výpočtu}
+	\[
+		Q_{T} = S_{2} \cdot \sqrt{{\frac{2\cdot p}{\rho_{v}  \cdot (1-{\frac{S_{2} }{S_{1}}}^2)}}}\cdot1000\cdot3600\ [\unit{\litre\per\hour}]
+	\]
+	
+	\[
+		Q_{T} = \num{4.91e-6} \cdot \sqrt{{\frac{2\cdot \num{8000}}{997  \cdot (1-{\frac{\num{4.91e-6}}{\num{2.84e-4}}}^2)}}}\cdot1000\cdot3600\ = \SI{70,8}{\litre\per\hour}
+	\]
+	
+	\[
+		P_T=0,65 \cdot g \cdot Q_M \cdot H \cdot \rho
+	\]
+	
+	\[
+		P_T=0,65 \cdot 9,81 \cdot 300 \cdot 0,818 \cdot 997 = \SI{0,4333}{\watt}
+	\]
+	
+	\[
+		P_{G} = U \cdot I 
+	\]
+	
+	\[
+		P_{G} = 2,47 \cdot 0,247 = \SI{0,6101}{\watt}
+	\]
 
-
-
-
-\clearpage
-\begin{table}[]
+\begin{table}[h!]
 	\centering
 	\def\arraystretch{1.4}
-	\begin{tabular}{|c|c|c|c|c|c|}
-			\hline
-			Veličina & \(U_{OC}\ [\unit{\volt}] \)  &  \(I_{SC}\ [\unit{\milli\ampere}]\) &  \(P_{max}\ [\unit{\milli\watt}]\)  &  \(U_{maxW}\ [\unit{\volt}]\)  &  \(I_{maxW}\ [\unit{\milli\ampere}]\)  \\ \hline \hline
-			Bílá & 1,98 &  12,6 &  14,11 &  1,4 &  10,08 \\\hline
-			Červená & 1,86 &  5,4 &  6,22 &  1,44 &  4,32 \\\hline
-			Zelená & 1,86 &  4,8 &  5,15 &  1,34 &  3,84 \\\hline
-			Modrá & 1,9 &  9,2 &  11,04 &  1,5 &  7,36 \\\hline
+	\begin{tabular}{ |l|l|l|l|l|l|l|l|l| }
+		\hline
+		Převod &
+		Zátěž [\unit{\ohm}] &
+		\(Q\ [\unit{\litre\per\hour}]\) &
+		\(I\ [\unit{\ampere}]\) &
+		\(P_{T}\ [\unit{\watt}]\) &
+		\(P_{G} \ [\unit{\watt}]\) &
+		\(\eta\ [-]\) &
+		\(Q_{T} \ [\unit{\litre\per\hour}]\) &
+		\(H\ [\unit{\meter}]\) 
+%
+		\DTLforeach{data}{\A=prevod,\B=R,\C=Q,\D=p,\E=U,\F=f, \G=I,\H=Pt,\I=Pg,\J=Qt,\K=etha,\L=H}
+		{\DTLiffirstrow{\\ \hline \hline}{\\ \hline} %
+			\A & 
+			\B &
+			\C &
+			\G &
+			\H &
+			\I &
+			\K &
+			\J &
+			\L 
+			}\\ \hline
 	\end{tabular}
-	\caption{Přehled důležitých hodnot pro různé zdroje světla.}
+	\caption{Vypočtené hodnoty.}
 	\label{tab:tabulka-hodnot}
 \end{table}
 
-\[
-	P_{max} =I_{maxW} \cdot U_{maxW} 
-\]
-\[
-	P_{max} =10,08 \cdot 1,4 = \SI{14,11}{\milli\watt}
-\]
+\begin{figure*}[h!]
+	\begin{tikzpicture}
+		\centering
+		\begin{axis}
+			[
+			xlabel={Zátěž\ [\unit{\ohm}]},
+			ylabel={\( P_{G} \ [\unit{\watt}]\)},
+			axis y line*=left, % dve y osy
+			width=1\textwidth,
+			height = 0.41\textwidth,
+			legend pos=south west,
+%			xmin=0,
+%			ymin=0,
+%			xmax=100
+%			ymax=100
+			]
+
+			\addplot[mark=x, mark options={solid}, thick, blue, solid, mark size=3pt] table [skip first n=1, x=R, y=Pg, col sep=comma] {data/graf.csv};
+			\addlegendentry{Výkon terbíny.}
+		\end{axis}   
+	 
+		
+		% Second y axis 
+		\begin{axis}
+			[
+			ylabel={\( \eta\ [-]\)},
+			axis x line=none,
+			axis y line*=right,
+			width=1\textwidth,
+			height = 0.41\textwidth,
+			legend pos=north east,
+%			xmin=0,
+%			ymin=0,
+%			xmax=100
+%			ymax=100
+			]
+
+			\addplot[mark=+, mark options={solid}, thick, red, solid, mark size=3pt] table [skip first n=1, x=R, y=eta, col sep=comma] {data/graf.csv};
+			
+			\addlegendentry{Účinnost}
+		
+	\end{axis}
+
+	\end{tikzpicture}
+	\caption{Závislost vypočteného výkonu a účinnosti turbíny na odporu zátěže.}
+\end{figure*}
 
 \section{Závěr}
-
+	Dle zadání a pokynů učitele jsme pečlivě změřili všechny zadané části úlohy. Z naměřených hodnot jsme na základě vztahů uvedených v zadání vypočetli odhadovaný výkon a účinnost modelu peltonovy turbíny při různých scénářích. Výsledky nás velmi překvapili, jelikož naše účinnost se pohybovala v rozmezí 15 až 215 \unit{\percent}, přičemž hodnoty vyšší než \SI{100}{\percent} nám vyšly několikrát a to vždy pro nejnižší zátěž. 
+	Pokud budeme předpokládat, že jsme nevytvořili perpetum mobile 2. druhu, musíme někde v procesu měření hledat chybu. Pokud při výpočtech ovlivníme hodnoty měřených veličin v rozptylu, který by mohl způsobit nepozorný pracovník špatným odečtením hodnoty, výsledky se změní jen nepatrně, lidský faktor tedy můžeme vyloučit. Chyba tedy může být způsobena buďto špatným případně špatně nastaveným měřícím přístrojem a nebo chybnými výpočetními vztahy. Můj odhad cílí na měřič průtoku vody, hodnota 300 popř. 600 l/h se mi zdá pocitově poněkud malá na to, jak proud vody působil.  Naopak teoretické hodnoty průtoku vyšly ještě podstatně nižší, takže bez dalšího měření není možné tento odhad potvrdit.
+	Vzhledem k nepřesnosti vypočtených hodnot jsou jakékoliv další vyvozené závěry neprůkazné a zatížené hrubou chybou.
 
 
 \end{document}
