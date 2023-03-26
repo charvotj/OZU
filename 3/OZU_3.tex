@@ -93,15 +93,18 @@
 			%axis y line*=left, % dve y osy
 			width=1\textwidth,
 			height = 0.5\textwidth,
-			legend pos=north west,
+			legend pos=south east,
 %			xmin=0,
 %			ymin=0,
 %			xmax=100
 %			ymax=100
 			]
 
-			\addplot[mark=x, mark options={solid}, thick, blue, only marks, mark size=3pt] table [skip first n=1, x=cas, y=teplota, col sep=comma, row sep=newline] {data/data-voda.csv};
+			\addplot[mark=x, mark options={solid}, thin, blue, only marks, mark size=3pt] table [skip first n=1, x=cas, y=teplota, col sep=comma, row sep=newline] {data/data-voda.csv};
+			\addlegendentry{Voda}
 			
+			\addplot[mark=+, mark options={solid}, thin, red, only marks, mark size=3pt] table [skip first n=1, x=cas, y=teplota, col sep=comma, row sep=newline] {data/data-parafin.csv};
+			\addlegendentry{Voda s parafinovými polštářky}
 		\end{axis}   
 	\end{tikzpicture}
 	\caption{Závislost teploty vody v kalorimetru na čase ohřevu popř. ustálení.}
@@ -116,6 +119,12 @@ Teor. energie spotřebovaná na ohřev vody:
  \[
 	Q=(m_{v} \cdot c_{v}+C_{k} ) \cdot (T_{max}-T_{init}) = (0,143 \cdot 4180 + 51,244) \cdot (62-23) = \qty{25310.376}{\joule}
  \]
+ Teor. čas ohřevu vody: 
+ \\
+ (Skutečný čas \qty{990}{s})
+ \[
+	t_{t} = \frac{Q}{U\cdot I}=\frac{25310,376}{9,8\cdot 3}\doteq\qty{861}{\second}
+ \]
 Ztráty při ohřevu: 
 \[
 	W_{zt} = W_{in} -Q= \num{29106}-\num{25310.376}=\qty{3795,624}{\joule}
@@ -125,7 +134,7 @@ Ztrátový výkon:
 	P_{zt} =  \frac{W_{zt}}{t}=\frac{25310.376}{1050}=\qty{24,105}{\joule\per\second}
 \]
 
-\subsection{Samovolné chlazení vody }
+\subsubsection{Samovolné chladnutí vody }
 Ztracené teplo: 
 \[
 	Q_{zt} = (m_{v} \cdot c_{v}+C_{k} ) \cdot (T_{end}-T_{max}) = (0,143 \cdot 4180 + 51,244) \cdot (57-62) = \qty{-3244.92}{\joule}
@@ -161,7 +170,26 @@ Ztrátový výkon:
 	\caption{Závislost teploty vody a parafinových polštářků v kalorimetru na čase ohřevu.}
 \end{figure*}
 
-%	\clearpage
+\subsubsection{Srovnání rychlostí ohřevu}
+Samotná voda:
+\[
+	\frac{\Delta T}{\Delta t}\cdot60= \frac{60-23}{990}\cdot60=\qty{2,24}{\degreeCelsius\per\minute}
+\]
+Voda s parafinovými polštářky:
+\[
+	\frac{\Delta T}{\Delta t}\cdot60= \frac{60-29}{750}\cdot60=\qty{2,48}{\degreeCelsius\per\minute}
+\]
+
+	\clearpage
 \section{Závěr}
-	Tentokrát to bude o červené karkulce...
+	V prvním kroku jsme nepřímo měřili tepelnou kapacitu kalorimetru, na základě výše uvedeného výpočtu jsme došli k hodnotě \(C_k \doteq \qty{51,244}{\joule\per\kelvin}\), tuto hodnotu jsme následně použili i v dalších výpočtech, pro dosažení co nejpřesnějších výsledků. 
+\\
+
+	Dále jsme analyzovali tepelné ztráty kalorimetru. Již během ohřevu docházelo k významným ztrátám energie. Zde se projevuje více faktorů, jednak samotné tepelné ztráty kalorimetru, druhak se část výkonu zdroje nepochybně ztrácí na přívodních kabelech a neohřívá tedy přímo vodu. Výpočty neusnadňuje ani fakt, že tepelná kapacita kalorimetru a objem vody v něm se v průběhu měření mění z důvodu přesunu vody z vnitřní nádoby do prostoru mezi stěny a izolaci. Pro jeho složitost jsme ale tento proces ve výpočtech zanedbali.
+\\
+
+	Samotné tepelné ztráty jsou viditelné po vypnutí ohřevu, zde jsme dospěli k hodnotě ztrátového výkonu \qty{5,693}{\joule\per\second}. Lze předpokládat, že s klesajícím rozdílem teplot by toto číslo klesalo, ale i tak se jedná o poměrně vysoké ztráty. Jejich omezení by pomohla zejména lepší izolace v prostoru víka nádoby.
+\\
+
+	Při porovnání rychlosti ohřevu samotné vody a vody s parafinovými polštářky jsme nezaznamenali velké rozdíly, obě závislosti mají přibližně lineární charakter. U parafinu je možné vidět mírný pokles rychlosti ohřevu při dosažení teploty zhruba \qty{45}{\degreeCelsius}, kdy se část energie začně spotřebovávat na tání parafinu, ten je amorfní látkou, proto taje postupně v širším rozsahu teplot. Proč je ale možné vidět stejný "schod" i u samotné vody nám bohužel není jasné. 
 \end{document}
