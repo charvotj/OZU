@@ -1,0 +1,83 @@
+% !TeX encoding = UTF-8
+
+\documentclass{protokol}
+
+\usepackage{tikz}
+\usetikzlibrary{calc}
+\usetikzlibrary{arrows}
+
+%====== Units =====
+\usepackage{siunitx}
+\sisetup{inter-unit-product =\ensuremath{\cdot}}
+\sisetup{group-digits = integer}
+\sisetup{output-decimal-marker = {,}}
+\sisetup{exponent-product = \ensuremath{\cdot}}
+\sisetup{separate-uncertainty}
+\sisetup{tight-spacing = false}
+%\sisetup{scientific-notation = true}
+%\sisetup{round-mode=places,round-precision=4}
+%\sisetup{evaluate-expression}
+
+
+%====== Grafy =====
+\usepackage{pgfplots}
+\pgfplotsset{width=0.8\linewidth, compat=1.17}
+\def\plotcscale{0.8}
+\usepackage{pgfplotstable}
+\usepackage[figurename=Graf]{caption} % figure caption rename
+%====== Rovnice align block ======
+\usepackage{amsmath}
+\setlength{\jot}{10pt} % rozestup mezi řádky
+
+\graphicspath{ {./img/} }
+
+%====== Vyplňte údaje ======
+\jmeno{Jakub Charvot}
+\kod{240844}
+\rocnik{2.}
+\obor{MET}
+\skupina{MET/4}
+\spolupracoval{Radek Kučera}
+
+\merenodne{10.\,11.\,2022}
+\odevzdanodne{24.\,11.\,2022}
+\nazev{Operační usměrňovače}
+\cislo{4} %měřené úlohy
+
+\predmet{Analogové elektronické obvody}
+\ustav{Ústav mikroelektroniky}
+\skola{FEKT VUT v Brně}
+
+\def\para{x+0}
+\def\parb{\para-80}
+
+% CSV
+\usepackage{blindtext}
+
+\usepackage{subfiles} % Best loaded last in the preamble
+\usepackage{datatool}
+
+% \DTLloaddb[omitlines=1]{data}{data/data-voda.csv}
+% \DTLloaddb[omitlines=2]{druha}{data/druha-cast.csv}
+
+
+
+\begin{document}
+%====== Vygenerování tabulky ======
+%	\maketitle
+
+\section{Zpracování měřených hodnot}
+
+\clearpage
+\section{Závěr}
+	V prvním kroku jsme nepřímo měřili tepelnou kapacitu kalorimetru, na základě výše uvedeného výpočtu jsme došli k hodnotě \(C_k \doteq \qty{51,244}{\joule\per\kelvin}\), tuto hodnotu jsme následně použili i v dalších výpočtech, pro dosažení co nejpřesnějších výsledků. 
+\\
+
+	Dále jsme analyzovali tepelné ztráty kalorimetru. Již během ohřevu docházelo k významným ztrátám energie. Zde se projevuje více faktorů, jednak samotné tepelné ztráty kalorimetru, druhak se část výkonu zdroje nepochybně ztrácí na přívodních kabelech a neohřívá tedy přímo vodu. Výpočty neusnadňuje ani fakt, že tepelná kapacita kalorimetru a objem vody v něm se v průběhu měření mění z důvodu přesunu vody z vnitřní nádoby do prostoru mezi stěny a izolaci. Pro jeho složitost jsme ale tento proces ve výpočtech zanedbali.
+\\
+
+	Samotné tepelné ztráty jsou viditelné po vypnutí ohřevu, zde jsme dospěli k hodnotě ztrátového výkonu \qty{5,693}{\joule\per\second}. Lze předpokládat, že s klesajícím rozdílem teplot by toto číslo klesalo, ale i tak se jedná o poměrně vysoké ztráty. Jejich omezení by pomohla zejména lepší izolace v prostoru víka nádoby.
+\\
+
+	Při porovnání rychlosti ohřevu samotné vody a vody s parafinovými polštářky jsme nezaznamenali velké rozdíly, obě závislosti mají přibližně lineární charakter. U parafinu je možné vidět mírný pokles rychlosti ohřevu při dosažení teploty zhruba \qty{45}{\degreeCelsius}, kdy se část energie začně spotřebovávat na tání parafinu, ten je amorfní látkou, proto taje postupně v širším rozsahu teplot. Proč je ale možné vidět stejný "schod" i u samotné vody nám bohužel není jasné. 
+\end{document}
