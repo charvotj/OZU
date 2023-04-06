@@ -1,0 +1,138 @@
+% !TeX encoding = UTF-8
+
+\documentclass{protokol}
+
+\usepackage{tikz}
+\usetikzlibrary{calc}
+\usetikzlibrary{arrows}
+
+%====== Units =====
+\usepackage{siunitx}
+\sisetup{inter-unit-product =\ensuremath{\cdot}}
+\sisetup{group-digits = integer}
+\sisetup{output-decimal-marker = {,}}
+\sisetup{exponent-product = \ensuremath{\cdot}}
+\sisetup{separate-uncertainty}
+\sisetup{tight-spacing = false}
+%\sisetup{scientific-notation = true}
+%\sisetup{round-mode=places,round-precision=4}
+%\sisetup{evaluate-expression}
+
+
+%====== Grafy =====
+\usepackage{pgfplots}
+\pgfplotsset{width=0.8\linewidth, compat=1.17}
+\def\plotcscale{0.8}
+\usepackage{pgfplotstable}
+\usepackage[figurename=Graf]{caption} % figure caption rename
+%====== Rovnice align block ======
+\usepackage{amsmath}
+\setlength{\jot}{10pt} % rozestup mezi řádky
+
+\graphicspath{ {./img/} }
+
+%====== Vyplňte údaje ======
+\jmeno{Jakub Charvot}
+\kod{240844}
+\rocnik{2.}
+\obor{MET}
+\skupina{MET/4}
+\spolupracoval{Radek Kučera}
+
+\merenodne{10.\,11.\,2022}
+\odevzdanodne{24.\,11.\,2022}
+\nazev{Operační usměrňovače}
+\cislo{4} %měřené úlohy
+
+\predmet{Analogové elektronické obvody}
+\ustav{Ústav mikroelektroniky}
+\skola{FEKT VUT v Brně}
+
+\def\para{x+0}
+\def\parb{\para-80}
+
+% CSV
+\usepackage{blindtext}
+
+\usepackage{subfiles} % Best loaded last in the preamble
+\usepackage{datatool}
+
+% \DTLloaddb[omitlines=1]{data}{data/data-voda.csv}
+% \DTLloaddb[omitlines=2]{druha}{data/druha-cast.csv}
+
+
+
+\begin{document}
+%====== Vygenerování tabulky ======
+%	\maketitle
+
+\section{Zpracování měřených hodnot}	
+\subsection{Sériový odpor (\(R_{ESR} \) )}
+\begin{table}[h!]
+	\centering
+	\def\arraystretch{1.4}
+	\begin{tabular}{|c|c|c|c|c|}
+		\hline
+		Kondenzátor & \(\Delta U\)\ [\unit{\milli\volt}]  & \(I_{vyb}\ [\unit{\ampere}] \)  & \(R_{ESR}\ [\unit{\milli\ohm}] \)  & Tabulkové \(R_{ESR}\ [\unit{\milli\ohm}] \)  \\ \hline \hline
+		Nichicon  & 87,5                                         & 2                           & 43,75                      & 200                                   \\ \hline
+		Eaton      & 30,6                                         & 2                           & 15,30                      & 34                                    \\ \hline
+		Maxwell       & 43,7                                         & 2                           & 21,85                      & 75                                    \\ \hline
+	\end{tabular}
+	\caption{Měřené a vypočtené hodnoty - \(R_{ESR} \) }
+	\label{tab:ojjoij}
+\end{table}
+
+\[
+	R_{ESR} = \frac{\Delta U}{I_{vyb} } = \frac{87,5}{2}=\qty{43,75}{\milli\ohm}
+\]
+
+\subsection{Měření kapacity}
+Vyjdeme z následujícího vztahu:
+\[
+	C=\frac{I_{vyb} (t_{2} -t_{1} )}{U_{2} -U_{1} }
+\]
+Při zvoleném poklesu napětí o 1 V a vybíjecím proudu 1 A odpovídá kapacita \(C\)  přímo změřenému času poklesu. 
+
+\begin{table}[h!]
+	\centering
+	\def\arraystretch{1.4}
+	\begin{tabular}{|c|c|}
+		\hline
+		Kondenzátor & \(C\ [\unit{\farad}] \)  \\ \hline \hline
+		Nichicon  & 8,86 \\ \hline
+		Eaton     & 8,34 \\ \hline
+		Maxwell   & 9,2 \\ \hline
+	\end{tabular}
+	\caption{Skutečné měřené kapacity kondezátorů 10 F. }
+	\label{tab:ojjoij}
+\end{table}
+
+\subsection{Měření svodového proudu \(I_{L} \) (samovybíjení)}
+\begin{table}[h!]
+	\centering
+	\def\arraystretch{1.4}
+	\begin{tabular}{|c|c|c|c|c|c|}
+		\hline
+		Kondenzátor & \(U_{1} \)\ [\unit{\volt}]  & \(U_{2}\ [\unit{\volt}] \)  & \(t\ [\unit{\second}] \)  & \(I_{L}\ [\unit{\micro\ampere}] \) & Tab. \(I_{L}\ [\unit{\micro\ampere}] \)  \\ \hline \hline
+		Nichicon  & 2,215 & 2,160  & 899 & 542,048 & 5000 \\ \hline
+		Eaton     & 2,212 & 2,114 & 900  & 908,133 & 23 \\ \hline
+		Maxwell   & 2,200 & 2,109 & 897  & 933,333 & 30 \\ \hline
+	\end{tabular}
+	\caption{Porovnání vypočtených a tabulkových hodnot \(I_{L} \) .}
+	\label{tab:ojjoij}
+\end{table}
+
+\[
+	I_{L} = \frac{C(U_{1} - U_{2} )}{t}=\frac{8,86(2,215 - 2,16 )}{899}=\qty{542,048}{\micro\ampere}
+\]
+
+\clearpage
+\section{Závěr}
+	Pro ideální vlastnosti superkondenzátoru chceme co nejmenší sériový odpor \(R_{ESR} \), protože právě jeho existence způsobuje ztráty při každém nabíjení a vybíjení. Stejně tak chceme co nejmenší samovybíjecí proud, naopak hledáme co nejvyšší kapacitu. 
+	
+	Každý z dodaných kondezátorů vede v jednom z těchto parametrů. V tabulkových i reálných hodnotách \(R_{ESR} \) vede značka Eaton, přičemž u všech vzorků byla měřená hodnota výrazně nižší než tabulková. 
+
+	Přestože se ve všech případech jedná o superkondenzátory s deklarovanou kapacitou 10 F, naměřili jsme vždy méně. Nejvíce tedy 9,2 F u značky Maxwell. Otázkou ovšem je, jaké byly tyto hodnoty v čase, kdy byly součástky nové a nepodléhaly dlouhodobému vystavení studentům. 
+
+	Nejnižší samovybíjecí proud \(I_{L} \) jsme naměřili u značky Nichicon a to zhruba 0,5 mA, přičemž specifikace uváděla desetkrát více. Zbylé kondenzátory měli vybíjecí proudy téměř dvojnásobné, i když jejich specifikace udávaly hodnoty více než o řád menší.
+\end{document}
